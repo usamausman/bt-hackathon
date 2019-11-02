@@ -40,7 +40,8 @@ const App = () => {
 
     const data = new FormData(form.current)
     let from = data.get('fromCountry')
-    from = countryToAirport[from.toLowerCase()]
+    // from = countryToAirport[from.toLowerCase()]
+    from = 'france'
     let start = data.get('from')
     let adults = data.get('adults')
 
@@ -50,7 +51,7 @@ const App = () => {
     let flights = await fetch(`/flights/${from}-${countryToAirport[country]}/${start}/${adults}`)
     flights = await flights.json()
 
-    console.log(flights)
+    setFlights(flights)
   }
 
   return (
@@ -109,9 +110,9 @@ const App = () => {
                   <p>£{result.price}</p>
                 </div>
                 <button onClick={showFlightsFor(result.url)}>Check Flights</button>
-                {/* {open === url && <div>
-                  {flights}
-                </div>} */}
+                {open === url && <div>
+                  {flights.map((flight) => `${flight.flights.length} flights from ${flight.depart} to ${flight.arrival} at £${flight.price}pp`)}
+                </div>}
               </div>
             ))}
           </div>
