@@ -1,3 +1,6 @@
+const request = require('request-promise-native')
+const express = require('express')
+
 const FLIGHTS_SESSION =
   'https://skyscanner-skyscanner-flight-search-v1.p.rapidapi.com/apiservices/pricing/v1.0'
 const FLIGHTS_POLL =
@@ -9,9 +12,7 @@ const userPrefs = {
   locale: 'en-GB',
 }
 
-const request = require('request-promise-native')
-
-const getFlights = async ({ from, to, depart, people = { adults: 1 } }) => {
+const getFlights = async ({ from, to, depart, people, comeBack }) => {
   const options = {
     json: true,
     resolveWithFullResponse: true,
@@ -29,6 +30,7 @@ const getFlights = async ({ from, to, depart, people = { adults: 1 } }) => {
     originPlace: `${from}-sky`,
     destinationPlace: `${to}-sky`,
     outboundDate: depart,
+    inboundDate: comeBack || undefined,
     ...people,
   })
 
@@ -40,14 +42,14 @@ const getFlights = async ({ from, to, depart, people = { adults: 1 } }) => {
   })
 
   // looks like last option is cheapest
-  body.Itineraries.forEach((itinerary) => {
-    console.log(itinerary.OutboundLegId)
-    console.log(
-      itinerary.PricingOptions[itinerary.PricingOptions.length - 1].Price
-    ) // cheapest?
+  const flights = body.Itineraries.map((itinerary) => {
+    // console.log(itinerary)
+    // console.log(
+    //   itinerary.PricingOptions[itinerary.PricingOptions.length - 1].Price
+    // ) // cheapest?
     const leg = body.Legs.find((leg) => leg.Id === itinerary.OutboundLegId)
-    console.log(leg.Departure)
-    console.log(leg.Arrival)
+    // console.log(leg.Departure)
+    // console.log(leg.Arrival)
     const segments = leg.SegmentIds.map((id) => body.Segments[id])
     segments.forEach((segment) => {
       const origin = body.Places.find(
@@ -63,18 +65,45 @@ const getFlights = async ({ from, to, depart, people = { adults: 1 } }) => {
       )
       const flightNumber = segment.FlightNumber
 
-      console.log(
-        `${carrier.Name} #${flightNumber}: ${origin.Name} -> ${destination.Name} from ${departure} to ${arrival}`
-      )
+      // console.log(
+      //   `${carrier.Name} #${flightNumber}: ${origin.Name} -> ${destination.Name} from ${departure} to ${arrival}`
+      // )
     })
+    return {
+      price:
+        itinerary.PricingOptions[itinerary.PricingOptions.length - 1].Price,
+      depart: leg.Departure,
+      arrival: leg.Arrival,
+      flights: segments.map((segment) => {
+        return {
+          airport: body.Places.find(
+            (place) => place.Id === segment.DestinationStation
+          ).Name,
+          from: segment.DepartureDateTime,
+          to: segment.ArrivalDateTime,
+        }
+      }),
+    }
   })
 
+  return flights
   // return headers
 }
 
-const main = async () => {
-  const got = await getFlights({ from: 'LHR', to: 'KHI', depart: '2019-11-20' })
-  console.log(got)
-}
+const app = express()
 
-main()
+app.get('/flights/:from-:to/:date/:adults', async (req, res) => {
+  const data = await getFlights({
+    from: req.params.from,
+    to: req.params.to,
+    people: { adults: req.params.adults },
+    depart: req.params.date,
+  })
+  data.sort((a, b) => a.price - b.price)
+
+  res.json(data)
+})
+
+app.listen(8001, () => {
+  console.log('Listening for flight requests...')
+})
