@@ -69,44 +69,19 @@ const App = () => {
         </form>
         {searched && (
           <div class="results">
-            <div class="result">
-              <img src="https://media.tacdn.com/media/attractions-splice-spp-360x240/06/71/9c/84.jpg" />
-              <div>
-                <a href="https://www.viator.com/tours/Barcelona/Montserrat-Tour-from-Barcelona-Including-Lunch-and-Wine-Tasting-in-Oller-del-Mas/d562-5716P2">
-                  Montserrat Tour from Barcelona Including Lunch and Gourmet
-                  Wine Tasting
-                </a>
-                <p>
-                  Venture into the Catalan countryside to visit Montserrat and
-                  go wine tasting on this full-day tour from Barcelona. Take a
-                  guided tour through the Basilica and Monastery on Montserrat,
-                  a beautiful, multi-peak mountain with dramatic rock
-                  formations, with free time to continue exploring the museum,
-                  farmer's market, or views from the ridge of Cavall Bernat.
-                  Afterward, visit the winery of Oller de Mas for a cellar tour,
-                  wine tasting, and a multi-course, Catalan meal.
-                </p>
-              </div>
-              <div>
-              <p>Location: Barcelona, Spain</p>
-              <p>Duration: 10 hours</p>
-              <p>Price: £83.24</p>
-              </div>
-              <button></button>
-            </div>
-
             {results.map((result) => (
               <div class="result" key={result.url}>
                 <img src={result.image} />
                 <div>
                   <a href={result.url}>{result.name}</a>
-                  <p>{result.description}</p>
+                  <p class="description">{result.description}</p>
                 </div>
                 <div>
                   <p>{result.location}</p>
                   <p>{result.duration}</p>
                   <p>£{result.price}</p>
                 </div>
+                <button>Check Flights</button>
               </div>
             ))}
           </div>
