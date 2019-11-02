@@ -1,0 +1,97 @@
+:root {
+  --text: #222;
+  --text-50: #22222288;
+  --background: #fff;
+  --background-50: #ffffff88;
+  --shadow: rgba(0, 0, 0, 0.25);
+  --blue: rgb(69, 189, 236);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  color: var(--text);
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  background: var(--text-50);
+  backdrop-filter: blur(6px);
+
+  /* height: 4rem; */
+}
+
+nav ul {
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  list-style: none;
+}
+
+nav ul li a {
+  display: block;
+  text-decoration: none;
+  color: var(--background);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  padding: 1rem;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+nav ul li a.active, nav ul li a:hover {
+  background: var(--background-50);
+}
+
+img.hero {
+  display: block;
+  width: 100%;
+  height: 500px;
+  background-size: cover;
+}
+
+.choose {
+  width: max-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  margin: 0 auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  transform: translateY(-50%);
+  box-shadow: 0 0 2px 0 var(--shadow), 0 2px 2px 0 var(--shadow);
+}
+
+.choose > * {
+  margin-right: 0.25rem;
+}
+
+.choose select {
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+
+.choose button {
+  margin: 0;
+  align-self: flex-end;
+  background: var(--blue);
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--background);
+  font-size: 1rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+  cursor: pointer;
+}
