@@ -50,7 +50,8 @@ nav ul li a {
   transition: background 0.25s ease, color 0.25s ease;
 }
 
-nav ul li a.active, nav ul li a:hover {
+nav ul li a.active,
+nav ul li a:hover {
   background: var(--background-50);
 }
 
@@ -64,21 +65,20 @@ img.hero {
 }
 
 .choose {
-  width: max-content;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--background);
-  margin: 0 auto;
+  margin: 0 2rem;
   padding: 1rem;
   border-radius: 1rem;
   transform: translateY(-50%);
   box-shadow: 0 0 2px 0 var(--shadow), 0 2px 2px 0 var(--shadow);
 
-  transition : transform 0.25s ease, margin 0.25s ease;
+  transition: transform 0.25s ease, margin 0.25s ease;
 }
 
-div.hasResults img {
+div.hasResults img.hero {
   height: 0;
 }
 
@@ -108,4 +108,14 @@ div.hasResults .choose {
   letter-spacing: 2px;
   font-weight: 600;
   cursor: pointer;
+}
+
+div.results {
+  display: grid;
+  margin: 0 2rem;
+  grid-gap: 1rem;
+}
+
+div.result {
+  display: flex;
 }
