@@ -108,6 +108,9 @@ const App = () => {
                   <p>£{result.price}</p>
                 </div>
                 <button onClick={showFlightsFor(result.url)}>Check Flights</button>
+                {/* {open === url && <div>
+                  {flights}
+                </div>} */}
               </div>
             ))}
           </div>
