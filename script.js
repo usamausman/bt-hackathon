@@ -11,6 +11,23 @@ const countryToAirport = {
 }
 
 const App = () => {
+  const [searched, setSearched] = React.useState(false)
+  const form = React.useRef(null)
+
+  let results = []
+
+  const submit = (e) => {
+    e.preventDefault()
+    setSearched(!searched)
+
+    const data = new FormData(form.current)
+    // /?keyword=thingtodo&price=opt&page=opt
+    let get = await fetch(`/?keyword=${data.get('activity')}`)
+    get = await get.json()
+
+    console.log(get)
+  }
+
   return (
     <React.Fragment>
       <nav>
@@ -28,27 +45,34 @@ const App = () => {
           </li>
         </ul>
       </nav>
-      <img
-        class="hero"
-        src="https://sunriverpines.com/wp-content/uploads/2018/10/mountains-592185_1280.jpg"
-      />
-      <form class="choose" action="activities">
-        <select name="adults">
-          <option value="1">1 Adult</option>
-          <option value="2">2 Adults</option>
-          <option value="3">3 Adults</option>
-          <option value="4">4 Adults</option>
-          <option value="5">5 Adults</option>
-          <option value="6">6 Adults</option>
-        </select>
-        <p>looking to</p>
-        <input name="activity"></input>
-        <p>from</p>
-        <input type="date" name="from"></input>
-        <p>to</p>
-        <input type="date" name="to"></input>
-        <button type="submit">GO</button>
-      </form>
+      <div class={searched ? 'hasResults' : ''}>
+        <img
+          class="hero"
+          src="https://sunriverpines.com/wp-content/uploads/2018/10/mountains-592185_1280.jpg"
+        />
+        <form class="choose" action="activities" onSubmit={submit} ref={form}>
+          <select name="adults">
+            <option value="1">1 Adult</option>
+            <option value="2">2 Adults</option>
+            <option value="3">3 Adults</option>
+            <option value="4">4 Adults</option>
+            <option value="5">5 Adults</option>
+            <option value="6">6 Adults</option>
+          </select>
+          <p>looking to</p>
+          <input name="activity"></input>
+          <p>from</p>
+          <input type="date" name="from"></input>
+          <p>to</p>
+          <input type="date" name="to"></input>
+          <button type="submit">GO</button>
+        </form>
+        {searched && (
+          <div class="results">
+            <div class="result"></div>
+          </div>
+        )}
+      </div>
     </React.Fragment>
   )
 }
