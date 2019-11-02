@@ -45,7 +45,8 @@ const App = () => {
     let adults = data.get('adults')
 
     let result = results.find((result) => result.url === url)
-    let country = result.location.split(',').reverse()[0].toLowerCase()
+    // let country = result.location.split(',').reverse()[0].toLowerCase()
+    let country = 'spain'
     let flights = await fetch(`/flights/${from}-${countryToAirport[country]}/${start}/${adults}`)
     flights = await flights.json()
 
