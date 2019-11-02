@@ -35,7 +35,7 @@ const App = () => {
     setResults(get)
   }
 
-  const showFlightsFor = async (url) => {
+  const showFlightsFor = async (url) => () => {
     setOpen(url)
 
     const data = new FormData(form.current)
