@@ -117,7 +117,9 @@ const App = () => {
                 </button>
                 {open === result.url && (
                   <div>
-                    {flights}
+                    {flights.map((flight) => {
+                      <p>{`${flight.flights.length} connecting flights from ${flight.depart} to ${flight.arrival} at £${flight.price}pp`}</p>
+                    })}
                   </div>
                 )}
               </div>
