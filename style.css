@@ -68,7 +68,7 @@ img.hero {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--background);
+  background: white;
   margin: 0 2rem;
   padding: 1rem;
   border-radius: 1rem;
@@ -93,15 +93,18 @@ div.hasResults .choose {
 }
 
 .choose select {
-  padding: 0.5rem;
-  border-radius: 1rem;
+  padding: 2px;
+  width: 130px;
+  text-align:center;
+  border-radius: 3px;
 }
 
 .choose button {
   margin: 0;
   align-self: flex-end;
-  background: var(--blue);
-  border-radius: 1.5rem;
+  width: 100px;
+  background: rgba(100, 100, 100, 0.4);
+  border-radius: 3px;
   padding: 0.5rem 1rem;
   color: var(--background);
   font-size: 1rem;
