@@ -42,6 +42,7 @@ const App = () => {
     let from = data.get('fromCountry')
     // from = countryToAirport[from.toLowerCase()]
     from = 'france'
+    from = countryToAirport[from]
     let start = data.get('from')
     let adults = data.get('adults')
 
@@ -116,9 +117,7 @@ const App = () => {
                 </button>
                 {open === result.url && (
                   <div>
-                    {flights.map((flight) => (
-                      <p>{`${flight.flights.length} connecting flights from ${flight.depart} to ${flight.arrival} at £${flight.price}pp`}</p>
-                    ))}
+                    {flights}
                   </div>
                 )}
               </div>
