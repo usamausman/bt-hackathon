@@ -1,3 +1,15 @@
+const countryToAirport = {
+  spain: 'MAD',
+  england: 'LHR',
+  france: 'CDG',
+  germany: 'FRA',
+  USA: 'JFK',
+  mexico: 'MEX',
+  australia: 'SYD',
+  china: 'PEK',
+  japan: 'HND',
+}
+
 const App = () => {
   return (
     <React.Fragment>
@@ -20,7 +32,7 @@ const App = () => {
         class="hero"
         src="https://sunriverpines.com/wp-content/uploads/2018/10/mountains-592185_1280.jpg"
       />
-      <form class="choose">
+      <form class="choose" action="activities">
         <select name="adults">
           <option value="1">1 Adult</option>
           <option value="2">2 Adults</option>
@@ -30,11 +42,7 @@ const App = () => {
           <option value="6">6 Adults</option>
         </select>
         <p>looking to</p>
-        <select name="activity">
-          <option value="surf">Surf</option>
-          <option value="hike">Hike</option>
-          <option value="eat">Eat</option>
-        </select>
+        <input name="activity"></input>
         <p>from</p>
         <input type="date" name="from"></input>
         <p>to</p>
