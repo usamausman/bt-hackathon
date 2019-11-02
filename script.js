@@ -14,18 +14,18 @@ const App = () => {
   const [searched, setSearched] = React.useState(false)
   const form = React.useRef(null)
 
-  let results = []
+  let [results, setResults] = React.useState([])
 
   const submit = async (e) => {
     e.preventDefault()
-    setSearched(!searched)
+    setSearched(true)
 
     const data = new FormData(form.current)
     // /?keyword=thingtodo&price=opt&page=opt
-    let get = await fetch(`/?keyword=${data.get('activity')}`)
+    let get = await fetch(`/index.php?keyword=${data.get('activity')}`)
     get = await get.json()
 
-    console.log(get)
+    setResults(get)
   }
 
   return (
@@ -69,7 +69,20 @@ const App = () => {
         </form>
         {searched && (
           <div class="results">
-            <div class="result"></div>
+            {results.map((result) => (
+              <div class="result" key={result.url}>
+                <img src={result.image} />
+                <div>
+                  <a href={result.url}>{result.name}</a>
+                  <p>{result.description}</p>
+                </div>
+                <div>
+                  <p>{result.location}</p>
+                  <p>{result.duration}</p>
+                </div>
+                <p>{result.price}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>
