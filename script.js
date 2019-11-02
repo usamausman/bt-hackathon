@@ -16,7 +16,7 @@ const App = () => {
 
   let results = []
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault()
     setSearched(!searched)
 
