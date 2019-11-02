@@ -36,8 +36,6 @@ const App = () => {
   }
 
   const showFlightsFor = (url) => async () => {
-    setOpen(url)
-
     const data = new FormData(form.current)
     let from = data.get('fromCountry')
     // from = countryToAirport[from.toLowerCase()]
@@ -54,6 +52,9 @@ const App = () => {
     )
     flights = await flights.json()
 
+    console.log(flights)
+
+    setOpen(url)
     setFlights(flights)
   }
 
@@ -115,13 +116,13 @@ const App = () => {
                 <button onClick={showFlightsFor(result.url)}>
                   Check Flights
                 </button>
-                {open === result.url && (
+                {open === result.url ? (
                   <div>
                     {flights.map((flight) => {
                       <p>{`${flight.flights.length} connecting flights from ${flight.depart} to ${flight.arrival} at £${flight.price}pp`}</p>
                     })}
                   </div>
-                )}
+                ) : null}
               </div>
             ))}
           </div>
