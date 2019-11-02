@@ -48,7 +48,9 @@ const App = () => {
     let result = results.find((result) => result.url === url)
     // let country = result.location.split(',').reverse()[0].toLowerCase()
     let country = 'spain'
-    let flights = await fetch(`/flights/${from}-${countryToAirport[country]}/${start}/${adults}`)
+    let flights = await fetch(
+      `/flights/${from}-${countryToAirport[country]}/${start}/${adults}`
+    )
     flights = await flights.json()
 
     setFlights(flights)
@@ -109,10 +111,16 @@ const App = () => {
                   <p>{result.duration}</p>
                   <p>£{result.price}</p>
                 </div>
-                <button onClick={showFlightsFor(result.url)}>Check Flights</button>
-                {open === result.url && <div>
-                  {flights.map((flight) => `${flight.flights.length} flights from ${flight.depart} to ${flight.arrival} at £${flight.price}pp`)}
-                </div>}
+                <button onClick={showFlightsFor(result.url)}>
+                  Check Flights
+                </button>
+                {open === result.url && (
+                  <div>
+                    {flights.map((flight) => (
+                      <p>{`${flight.flights.length} connecting flights from ${flight.depart} to ${flight.arrival} at £${flight.price}pp`}</p>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
