@@ -15,6 +15,8 @@ const App = () => {
   const form = React.useRef(null)
 
   let [results, setResults] = React.useState([])
+  let [flights, setFlights] = React.useState([])
+  let [open, setOpen] = React.useState('')
 
   const submit = async (e) => {
     e.preventDefault()
@@ -25,7 +27,29 @@ const App = () => {
     let get = await fetch(`/index.php?keyword=${data.get('activity')}`)
     get = await get.json()
 
+    if (!get) {
+      alert('There are no results :(')
+      get = []
+    }
+
     setResults(get)
+  }
+
+  const showFlightsFor = (url) => {
+    setOpen(url)
+
+    const data = new FormData(form.current)
+    let from = data.get('fromCountry')
+    from = countryToAirport[from].toLowerCase()
+    let start = data.get('from')
+    let adults = data.get('adults')
+
+    let result = results.find((result) => result.url === url)
+    let country = result.location.split(',').reverse()[0].toLowerCase()
+    let flights = await fetch(`/flights/${from}-${countryToAirport[country]}/${start}/${adults}`)
+    flights = await flights.json()
+
+    console.log(flights)
   }
 
   return (
@@ -62,8 +86,10 @@ const App = () => {
           <p>looking to</p>
           <input name="activity"></input>
           <p>from</p>
+          <input type="country" name="fromCountry"></input>
+          <p>departing</p>
           <input type="date" name="from"></input>
-          <p>to</p>
+          <p>and returning</p>
           <input type="date" name="to"></input>
           <button type="submit">GO</button>
         </form>
@@ -81,7 +107,7 @@ const App = () => {
                   <p>{result.duration}</p>
                   <p>£{result.price}</p>
                 </div>
-                <button>Check Flights</button>
+                <button onClick={showFlightsFor(result.url)}>Check Flights</button>
               </div>
             ))}
           </div>
