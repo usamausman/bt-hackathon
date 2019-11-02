@@ -93,15 +93,24 @@ const getFlights = async ({ from, to, depart, people, comeBack }) => {
 const app = express()
 
 app.get('/flights/:from-:to/:date/:adults', async (req, res) => {
-  const data = await getFlights({
-    from: req.params.from,
-    to: req.params.to,
-    people: { adults: req.params.adults },
-    depart: req.params.date,
-  })
-  data.sort((a, b) => a.price - b.price)
+  try {
+    const data = await getFlights({
+      from: req.params.from,
+      to: req.params.to,
+      people: { adults: req.params.adults },
+      depart: req.params.date,
+    })
+    data.sort((a, b) => a.price - b.price)
 
-  res.json(data)
+    res.json(data)
+  } catch (e) {
+    if (e.statusCode === 429) {
+      res.status(400).json({ error: 'rate limit exceeded' })
+    } else {
+      console.log(e)
+      res.status(500).json({ error: 'unknown error' })
+    }
+  }
 })
 
 app.listen(8001, () => {
