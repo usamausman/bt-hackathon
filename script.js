@@ -110,7 +110,7 @@ const App = () => {
                   <p>£{result.price}</p>
                 </div>
                 <button onClick={showFlightsFor(result.url)}>Check Flights</button>
-                {open === url && <div>
+                {open === result.url && <div>
                   {flights.map((flight) => `${flight.flights.length} flights from ${flight.depart} to ${flight.arrival} at £${flight.price}pp`)}
                 </div>}
               </div>
