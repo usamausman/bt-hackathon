@@ -40,7 +40,7 @@ const App = () => {
 
     const data = new FormData(form.current)
     let from = data.get('fromCountry')
-    from = countryToAirport[from].toLowerCase()
+    from = countryToAirport[from.toLowerCase()]
     let start = data.get('from')
     let adults = data.get('adults')
 

@@ -130,6 +130,10 @@ div.result {
   overflow: hidden;
 }
 
+div.result a {
+  font-weight: bold;
+}
+
 div.result img {
   width: 100%;
   max-height: 100%;
